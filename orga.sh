@@ -20,23 +20,25 @@ fi
 
 cd $Destination #On se rend dans le repertoire voulu
 
-ls | grep -Eo "\..+$" | sort -u >> .listextension #on récupère les noms des extensions
-cat .listextension | tr -d "." >> .listextension2 #On enlève les points
-rm .listextension
+ls | grep -Eo "\..*$" | sort -u >> .listextension #on récupère les noms des extensions
 
-for ext in $(cat .listextension2) ; do
-	if [ ! -d TRI_$ext ]
+for ext in $(cat .listextension) ; do
+	ext1=$(echo $ext | tr -d ".")
+	if [ ! -d TRI_$ext1 ]
 	then
-		mkdir TRI_$ext
+		mkdir TRI_$ext1
 	fi
-	find $PWD -type f -iname "*.$ext" | grep -v "TRI_$ext" >> .liste_tri_$ext
-	work=$(cat .liste_tri_$ext)
+	find $PWD -type f -iname "*$ext" | grep -v "TRI_$ext1" >> .liste_tri_$ext1
+	work=$(cat .liste_tri_$ext1)
 
 	for file in $work
 	do
-		mv $file TRI_$ext
+		mv $file TRI_$ext1
 	done
 done
-rm .listextension2
+
+find $PWD -type d -empty -print -delete
+
+rm .listextension
 rm .liste_tri_*
 exit 0
