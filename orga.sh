@@ -1,5 +1,7 @@
 #!/bin/bash
-#travail en cours sur script d'organisation de répertoire
+#script d'organisation de répertoire
+#Par faitlx
+#v2.0 le 15/12/2020
 
 #initialisation des arguments
 
